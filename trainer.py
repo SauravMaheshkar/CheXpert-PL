@@ -1,9 +1,12 @@
-import pytorch_lightning as pl
-from model import CheXpertModel
-from datamodule import CheXpertDataModule
 from typing import List, Optional
-from torch import nn
-from torch import optim
+
+import pytorch_lightning as pl
+from pytorch_lightning.loggers.wandb import WandbLogger
+from torch import nn, optim
+
+from src.datamodule import CheXpertDataModule
+from src.model import CheXpertModel
+
 
 class CheXpertLightningModule(pl.LightningModule):
     def __init__(self, 
@@ -37,6 +40,7 @@ class CheXpertLightningModule(pl.LightningModule):
         y_hat = self(x)
 
         loss = self.criterion(y_hat, y)
+        self.log("train/loss", loss)
         return loss
 
 if __name__ == "__main__":
@@ -57,6 +61,6 @@ if __name__ == "__main__":
         img_crop=224,
         class_names=class_names
     )
-
-    trainer = pl.Trainer(accelerator="gpu", gpus=1)
+    logger = WandbLogger()
+    trainer = pl.Trainer(logger, accelerator="gpu", gpus=1)
     trainer.fit(model, datamodule)

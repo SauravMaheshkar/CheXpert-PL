@@ -4,7 +4,7 @@ import pytorch_lightning as pl
 from torchvision import transforms
 from torch.utils.data import DataLoader
 
-from dataset import CheXpertDataSet
+from .dataset import CheXpertDataSet
 
 
 class CheXpertDataModule(pl.LightningDataModule):
@@ -52,14 +52,14 @@ class CheXpertDataModule(pl.LightningDataModule):
             self.val_path,
             transform=self.transforms,
             prefix="../",
-            num_workers=self.num_workers
         )
     
     def train_dataloader(self):
         return DataLoader(
             self.train_dataset, 
             batch_size=self.batch_size,
-            shuffle=True,
+            num_workers=self.num_workers,
+            shuffle=True
         )
     
     def val_dataloader(self):

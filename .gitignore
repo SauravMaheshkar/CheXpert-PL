@@ -11,3 +11,6 @@ models/
 notebooks/
 
 **/.DS_Store
+
+wandb/
+lightning_logs/
