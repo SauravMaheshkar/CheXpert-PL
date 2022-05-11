@@ -16,12 +16,16 @@ class CheXpertModel(nn.Module):
                 ) -> None:
         super(CheXpertModel, self).__init__()
         self.model = timm.create_model(model_alias, num_classes=0, pretrained=pretrained)
-        self.hidden_layers = [nn.Linear(feature_size, hidden_layers[0])]
+        self.hidden_layers = [
+            nn.Linear(feature_size, hidden_layers[0]),
+            nn.ReLU()
+        ]
 
         for idx in range(1, len(hidden_layers)):
-            self.hidden_layers.append(
-                nn.Linear(hidden_layers[idx - 1], hidden_layers[idx])
-            )
+            self.hidden_layers.extend([
+                nn.Linear(hidden_layers[idx - 1], hidden_layers[idx]),
+                nn.ReLU()
+            ])
         
         self.hidden_layers.append(nn.Linear(hidden_layers[-1], output_size))
 
