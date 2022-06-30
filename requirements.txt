@@ -8,5 +8,5 @@ pylint==2.14.3
 pytest==7.1.2
 scikit-learn==1.0.2
 scipy==1.7.3
-torch==1.11.0
+torch==1.12.0
 torchvision==0.13.0
