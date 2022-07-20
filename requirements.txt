@@ -1,5 +1,5 @@
 black==22.6.0
-mypy==0.961
+mypy==0.971
 numpy==1.21.6
 opencv-python==4.6.0.66
 Pillow==9.2.0
